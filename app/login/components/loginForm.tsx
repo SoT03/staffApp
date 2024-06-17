@@ -16,7 +16,13 @@ import { Button } from '@/components/ui/button';
 
 const formSchema = z.object({
 	emailAddress: z.string().email(),
-	pinCode: z.number().int().gt(4).lt(4),
+	pinCode: z
+		.string()
+		.max(4, { message: 'Pin must contain 4 numbers.' })
+		.min(4, { message: 'Pin must contain 4 numbers.' })
+		.refine((val) => !Number.isNaN(parseInt(val)), {
+			message: 'Expected number, received a string.',
+		}),
 });
 
 export default function LoginForm() {
@@ -24,12 +30,12 @@ export default function LoginForm() {
 		resolver: zodResolver(formSchema),
 		defaultValues: {
 			emailAddress: '',
-			pinCode: undefined,
+			pinCode: '',
 		},
 	});
 
-	const handleSubmit = () => {
-		console.log('Form sent');
+	const handleSubmit = (values: z.infer<typeof formSchema>) => {
+		console.log(values);
 	};
 
 	return (
@@ -64,7 +70,7 @@ export default function LoginForm() {
 								<FormItem>
 									<FormLabel>Pin</FormLabel>
 									<FormControl>
-										<Input placeholder='1234' type='email' {...field} />
+										<Input placeholder='1234' type='number' {...field} />
 									</FormControl>
 
 									<FormMessage />

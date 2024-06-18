@@ -4,8 +4,6 @@ import Credentials from 'next-auth/providers/credentials';
 import * as z from 'zod';
 import prismadb from './lib/prismadb';
 import { User } from './types';
-import bcrypt from 'bcrypt';
-import { redirect } from 'next/navigation';
 
 async function getUser(emailAddress: string): Promise<User | undefined> {
 	try {
@@ -23,6 +21,7 @@ async function getUser(emailAddress: string): Promise<User | undefined> {
 
 export const { auth, signIn, signOut } = NextAuth({
 	...authConfig,
+
 	providers: [
 		Credentials({
 			async authorize(credentials) {

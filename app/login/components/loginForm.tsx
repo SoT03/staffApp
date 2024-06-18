@@ -1,7 +1,5 @@
 'use client';
 import React, { useState } from 'react';
-import { signIn } from '@/auth';
-import { AuthError } from 'next-auth';
 
 import * as z from 'zod';
 import { useForm } from 'react-hook-form';
@@ -17,9 +15,9 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import axios from 'axios';
+
 import { authenticate } from '@/actions/authenticate';
-import { error } from 'console';
+import toast from 'react-hot-toast';
 
 const formSchema = z.object({
 	emailAddress: z.string().email(),
@@ -45,8 +43,12 @@ export default function LoginForm() {
 
 	const handleSubmit = async (values: z.infer<typeof formSchema>) => {
 		setIsLoading(true);
-		await authenticate({ ...values });
-
+		const err = await authenticate({ ...values });
+		if (err) {
+			toast.error(err);
+			return setIsLoading(false);
+		}
+		toast.success('You have been logged in successfully');
 		setIsLoading(false);
 	};
 
@@ -95,7 +97,7 @@ export default function LoginForm() {
 					type='submit'
 					disabled={isLoading}
 					className='mt-6 max-w-md w-full md:my-8'>
-					Login
+					{isLoading ? 'Logging...' : 'Login'}
 				</Button>
 			</form>
 		</Form>

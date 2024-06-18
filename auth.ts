@@ -5,6 +5,7 @@ import * as z from 'zod';
 import prismadb from './lib/prismadb';
 import { User } from './types';
 import bcrypt from 'bcrypt';
+import { redirect } from 'next/navigation';
 
 async function getUser(emailAddress: string): Promise<User | undefined> {
 	try {
@@ -42,8 +43,10 @@ export const { auth, signIn, signOut } = NextAuth({
 					const { emailAddress, pin } = parsedCredentials.data;
 					const user = await getUser(emailAddress);
 					if (!user) return null;
-					const pinsMatches =  pin === user.pin.toString()
-					if (pinsMatches) return user;
+					const pinsMatches = pin === user.pin.toString();
+					if (pinsMatches) {
+						return user;
+					}
 				}
 				console.log('Invalid credentials');
 				return null;

@@ -11,10 +11,13 @@ generator client {
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
+  directUrl         = env("DIRECT_URL")
 }
 
 model Employee {
   id Int      @id @default(autoincrement())
+  pin Int 
+  email String
   fullName String 
   subdivison String
   position String

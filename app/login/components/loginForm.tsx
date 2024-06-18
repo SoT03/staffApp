@@ -16,7 +16,7 @@ import { Button } from '@/components/ui/button';
 
 const formSchema = z.object({
 	emailAddress: z.string().email(),
-	pinCode: z
+	pin: z
 		.string()
 		.max(4, { message: 'Pin must contain 4 numbers.' })
 		.min(4, { message: 'Pin must contain 4 numbers.' })
@@ -30,7 +30,7 @@ export default function LoginForm() {
 		resolver: zodResolver(formSchema),
 		defaultValues: {
 			emailAddress: '',
-			pinCode: '',
+			pin: '',
 		},
 	});
 
@@ -63,7 +63,7 @@ export default function LoginForm() {
 						}}
 					/>
 					<FormField
-						name='pinCode'
+						name='pin'
 						control={form.control}
 						render={({ field }) => {
 							return (

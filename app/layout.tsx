@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { Nunito } from 'next/font/google';
 import './globals.css';
+import prismadb from '@/lib/prismadb';
 
 const nunito = Nunito({ subsets: ['latin'] });
 

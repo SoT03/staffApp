@@ -1,8 +1,12 @@
 'use client';
-import React from 'react';
+import React, { useState } from 'react';
+import { signIn } from '@/auth';
+import { AuthError } from 'next-auth';
+
 import * as z from 'zod';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
+
 import {
 	Form,
 	FormControl,
@@ -14,6 +18,8 @@ import {
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import axios from 'axios';
+import { authenticate } from '@/actions/authenticate';
+import { error } from 'console';
 
 const formSchema = z.object({
 	emailAddress: z.string().email(),
@@ -27,6 +33,8 @@ const formSchema = z.object({
 });
 
 export default function LoginForm() {
+	const [isLoading, setIsLoading] = useState(false);
+
 	const form = useForm<z.infer<typeof formSchema>>({
 		resolver: zodResolver(formSchema),
 		defaultValues: {
@@ -36,7 +44,10 @@ export default function LoginForm() {
 	});
 
 	const handleSubmit = async (values: z.infer<typeof formSchema>) => {
-		
+		setIsLoading(true);
+		await authenticate({ ...values });
+
+		setIsLoading(false);
 	};
 
 	return (
@@ -80,7 +91,10 @@ export default function LoginForm() {
 						}}
 					/>
 				</div>
-				<Button type='submit' className='mt-6 max-w-md w-full md:my-8'>
+				<Button
+					type='submit'
+					disabled={isLoading}
+					className='mt-6 max-w-md w-full md:my-8'>
 					Login
 				</Button>
 			</form>

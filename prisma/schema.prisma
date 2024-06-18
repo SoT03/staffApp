@@ -15,12 +15,14 @@ datasource db {
 }
 
 model Employee {
-  id Int      @id @default(autoincrement())
+  id String @id @default(uuid())
   pin Int 
   email String
   fullName String 
-  subdivison String
+  subdivision String
   position String
   status String
   outOfOfficeBalance Int
 }
+
+

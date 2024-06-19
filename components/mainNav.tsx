@@ -49,8 +49,8 @@ export default function MainNav({ accessLevel }: NavbarProps) {
 						<Link
 							href={route.href}
 							className={cn(
-								'relative text-sm font-medium transition-all lg:text-base before:left-0 before:bottom-0 before:bg-white before:w-0 before:h-px before:transition-[width] before:duration-500  before:absolute   before:content-[""] hover:before:w-full',
-								route.active ? 'text-slate-400 ' : 'text-white'
+								'relative text-sm font-medium transition-all lg:text-base before:left-0 before:bottom-0 text-white before:bg-white before:w-0 before:h-px before:transition-[width] before:duration-500  before:absolute   before:content-[""] hover:before:w-full',
+								route.active ? 'before:w-full  ' : ''
 							)}>
 							{route.label}
 						</Link>

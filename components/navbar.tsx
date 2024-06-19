@@ -26,8 +26,8 @@ export default function Navbar({ accessLevel }: NavbarProps) {
 	};
 
 	return (
-		<div className='border-b'>
-			<div className='flex h-16 items-center px-12'>
+		<div className='border-b bg-sky-500'>
+			<div className='flex h-16 items-center px-20'>
 				<MainNav accessLevel={accessLevel} />
 				<Button
 					variant='destructive'

@@ -3,6 +3,7 @@ import React from 'react';
 import { NavbarProps } from './navbar';
 import { usePathname } from 'next/navigation';
 import Link from 'next/link';
+import { cn } from '@/lib/utils';
 
 export default function MainNav({ accessLevel }: NavbarProps) {
 	const pathname = usePathname();
@@ -27,10 +28,7 @@ export default function MainNav({ accessLevel }: NavbarProps) {
 			href: '/lists/leaverequests',
 			label: 'Leave Requests',
 			active: pathname === '/lists/leaverequests',
-			accessLevel:
-				accessLevel === 'HR Manager' || accessLevel === 'Project Manager'
-					? 1
-					: 0,
+			accessLevel: 1,
 		},
 		{
 			href: '/lists/approvalrequests',
@@ -44,10 +42,19 @@ export default function MainNav({ accessLevel }: NavbarProps) {
 	];
 
 	return (
-		<nav>
+		<nav className='flex items-center space-x-4 lg:space-x-8 '>
 			{routes.map((route) => {
 				if (route.accessLevel) {
-					return <Link href={route.href}>{route.label}</Link>;
+					return (
+						<Link
+							href={route.href}
+							className={cn(
+								'relative text-sm font-medium transition-all lg:text-base before:left-0 before:bottom-0 before:bg-white before:w-0 before:h-px before:transition-[width] before:duration-500  before:absolute   before:content-[""] hover:before:w-full',
+								route.active ? 'text-slate-400 ' : 'text-white'
+							)}>
+							{route.label}
+						</Link>
+					);
 				}
 			})}
 		</nav>

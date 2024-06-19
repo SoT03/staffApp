@@ -1,7 +1,8 @@
 'use server';
-import { signIn } from '@/auth';
+import { signIn, signOut } from '@/auth';
 import { AuthError } from 'next-auth';
 import { redirect } from 'next/navigation';
+import toast from 'react-hot-toast';
 
 // ...
 
@@ -17,5 +18,15 @@ export async function authenticate(formData: any) {
 		}
 
 		throw error;
+	}
+}
+
+export async function logout() {
+	try {
+		await signOut();
+	} catch (error) {
+		if (error instanceof AuthError) {
+			return 'Something went wrong';
+		}
 	}
 }

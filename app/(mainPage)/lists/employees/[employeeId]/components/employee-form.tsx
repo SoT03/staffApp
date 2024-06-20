@@ -94,14 +94,11 @@ export default function EmployeeForm({
 		try {
 			setLoading(true);
 			if (initialData) {
-				await axios.patch(
-					`/api/${params.storeId}/billboards/${params.billboardId}`,
-					data
-				);
+				await axios.patch(`/api/employees/${params.employeeId}`, data);
 			} else {
-				await axios.post(`/api/${params.storeId}/billboards`, data);
+				await axios.post(`/api/employees`, data);
 			}
-			router.push(`/${params.storeId}/billboards`);
+			router.push(`/employees`);
 			router.refresh();
 			toast.success(toastMessage);
 		} catch (error) {
@@ -116,13 +113,13 @@ export default function EmployeeForm({
 			setLoading(true);
 
 			await axios.delete(
-				`/api/${params.storeId}/billboards/${params.billboardId}`
+				`/api/employees/${params.employeeId}`
 			);
 			router.refresh();
 			router.push(`/${params.storeId}/billboards`);
 			toast.success('Billboard deleted.');
 		} catch (error) {
-			toast.error('Make sure you removed all categories using this billboard');
+			toast.error('Something went wrong');
 		} finally {
 			setLoading(false);
 			setOpen(false);

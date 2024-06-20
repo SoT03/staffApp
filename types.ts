@@ -1,6 +1,6 @@
 export type User = {
 	id: string;
-	pin: number;
+	pin: string;
 	email: string;
 	fullName: string;
 	subdivision: string;

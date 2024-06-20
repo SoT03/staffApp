@@ -16,12 +16,15 @@ datasource db {
 
 model Employee {
   id String @id @default(uuid())
-  pin Int 
+  pin String
   email String
   fullName String 
   subdivision String
   position String
   status String
+  peoplePartnerId String @unique
+  peoplePartner Employee @relation("peoplePartnerRelation", fields: [peoplePartnerId], references: [id])
+  employees     Employee[] @relation("peoplePartnerRelation")
   outOfOfficeBalance Int
 }
 

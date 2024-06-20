@@ -1,5 +1,5 @@
 'use server';
-import { signIn, signOut } from '@/auth';
+import { auth, signIn, signOut } from '@/auth';
 import { AuthError } from 'next-auth';
 import { redirect } from 'next/navigation';
 import toast from 'react-hot-toast';
@@ -28,5 +28,12 @@ export async function logout() {
 		if (error instanceof AuthError) {
 			return 'Something went wrong';
 		}
+	}
+}
+
+export async function checkAuth(data: string) {
+	if (data === 'Employee') {
+		console.log('working');
+		redirect('/notallowed');
 	}
 }

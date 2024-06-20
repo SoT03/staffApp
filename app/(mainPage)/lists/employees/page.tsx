@@ -1,9 +1,16 @@
-import React from 'react';
+import { auth } from '@/auth';
 import EmployeesClient from './components/client';
 import prismadb from '@/lib/prismadb';
+import { checkAuth } from '@/actions/authenticate';
 
 export default async function EmployeesPage() {
 	const employees = await prismadb.employee.findMany();
+
+	const session = await auth();
+
+	await checkAuth(
+		employees.find((emp) => emp.email === session?.user?.email)!.position
+	);
 
 	const formattedEmployess = employees.map((employee) => ({
 		pin: employee.pin,

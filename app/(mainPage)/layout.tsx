@@ -1,6 +1,7 @@
 import { auth } from '@/auth';
 import Navbar from '@/components/navbar';
 import prismadb from '@/lib/prismadb';
+
 import React from 'react';
 
 export default async function MainLayout({
@@ -18,8 +19,6 @@ export default async function MainLayout({
 			position: true,
 		},
 	});
-
-	
 
 	return (
 		<>

@@ -1,5 +1,6 @@
+import { auth } from '@/auth';
 import prismadb from '@/lib/prismadb';
-import { useSession } from 'next-auth/react';
+
 import { NextResponse } from 'next/server';
 import React from 'react';
 
@@ -8,12 +9,12 @@ export async function PATCH(
 	{ params }: { params: { employeeId: string } }
 ) {
 	try {
-		const { data: session, status: authStatus } = useSession();
+		const session = await auth();
 
 		const body = await req.json();
 
-		if (authStatus !== 'authenticated') {
-			return new NextResponse('Unauthenticated', { status: 401 });
+		if (!session?.user) {
+			return new NextResponse('Unauthenticated', { status: 500 });
 		}
 
 		const {
@@ -81,12 +82,12 @@ export async function DELETE(
 	{ params }: { params: { employeeId: string } }
 ) {
 	try {
-		const { data: session, status: authStatus } = useSession();
+		const session = await auth();
 
 		const body = await req.json();
 
-		if (authStatus !== 'authenticated') {
-			return new NextResponse('Unauthenticated', { status: 401 });
+		if (!session?.user) {
+			return new NextResponse('Unauthenticated', { status: 500 });
 		}
 
 		if (!params.employeeId) {

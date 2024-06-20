@@ -1,9 +1,12 @@
+import { auth } from '@/auth';
 import prismadb from '@/lib/prismadb';
 import { NextResponse } from 'next/server';
 
 export async function POST(req: Request) {
 	try {
 		const body = await req.json();
+
+		const session = await auth();
 
 		const {
 			pin,
@@ -15,6 +18,10 @@ export async function POST(req: Request) {
 			peoplePartnerId,
 			outOfOfficeBalance,
 		} = body;
+
+		if (!session?.user) {
+			return new NextResponse('Unauthenticated', { status: 500 });
+		}
 
 		if (!pin) {
 			return new NextResponse('Pin is required', { status: 400 });

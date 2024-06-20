@@ -98,7 +98,7 @@ export default function EmployeeForm({
 			} else {
 				await axios.post(`/api/employees`, data);
 			}
-			router.push(`/employees`);
+			router.push(`/lists/employees`);
 			router.refresh();
 			toast.success(toastMessage);
 		} catch (error) {

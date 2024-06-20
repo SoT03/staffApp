@@ -103,3 +103,22 @@ export async function DELETE(
 		return new NextResponse('Iternal error', { status: 500 });
 	}
 }
+export async function GET(
+	req: Request,
+	{ params }: { params: { employeeId: string } }
+) {
+	try {
+		if (!params.employeeId) {
+			return new NextResponse('Employee id is required', { status: 400 });
+		}
+
+		const employee = await prismadb.employee.findUnique({
+			where: { id: params.employeeId },
+		});
+
+		return NextResponse.json(employee);
+	} catch (error) {
+		console.log('[BILLBOARD_GET]', error);
+		return new NextResponse('Iternal error', { status: 500 });
+	}
+}

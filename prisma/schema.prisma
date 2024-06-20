@@ -22,7 +22,7 @@ model Employee {
   subdivision String
   position String
   status String
-  peoplePartnerId String @unique
+  peoplePartnerId String
   peoplePartner Employee @relation("peoplePartnerRelation", fields: [peoplePartnerId], references: [id])
   employees     Employee[] @relation("peoplePartnerRelation")
   outOfOfficeBalance Int

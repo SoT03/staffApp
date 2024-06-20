@@ -112,9 +112,7 @@ export default function EmployeeForm({
 		try {
 			setLoading(true);
 
-			await axios.delete(
-				`/api/employees/${params.employeeId}`
-			);
+			await axios.delete(`/api/employees/${params.employeeId}`);
 			router.refresh();
 			router.push(`/${params.storeId}/billboards`);
 			toast.success('Billboard deleted.');
@@ -325,10 +323,11 @@ export default function EmployeeForm({
 									<FormLabel>Out of office days avaible</FormLabel>
 									<FormControl>
 										<Input
+											type='number'
 											disabled={loading}
 											placeholder=''
 											{...field}
-											type='number'
+											onChange={(event) => field.onChange(+event.target.value)}
 										/>
 									</FormControl>
 									<FormMessage />
